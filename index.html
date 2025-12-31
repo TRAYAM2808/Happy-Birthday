@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -51,6 +52,13 @@
             90% { opacity: 1; }
             100% { transform: translateY(-100px) translateX(50px); opacity: 0; }
         }
+        .particles,
+.dim-overlay,
+body::after {
+  inset: 0;
+  overflow: hidden;
+}
+
 
         /* Hero Section */
         .hero {
@@ -108,7 +116,12 @@
         }
 
         .book-section { min-height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 2rem 1rem; position: relative; z-index: 2; }
-        
+        .book-section,
+.book {
+  overflow: hidden;
+  max-width: 100%;
+}
+
         .book { 
             max-width: 900px; 
             width: 100%; 
@@ -248,6 +261,18 @@ page-front, .page-back {
 .dim-overlay.active {
     opacity: 1;
 }
+@media (max-width: 768px) {
+  .hero,
+  .book-section {
+    min-height: 100svh;
+    min-height: -webkit-fill-available;
+  }
+}
+  * {
+    outline: 1px solid red;
+  }
+</style>
+
 
     </style>
 </head>
