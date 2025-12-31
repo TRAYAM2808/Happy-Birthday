@@ -466,24 +466,18 @@ function updateUI() {
 }
 
 function flipNext() {
-    if (isFlipping) return;
-    if (currentState >= pageElements.length - 1) return;
-
-    isFlipping = true;
-
-    if (currentState === 0 && audio.paused) {
-        audio.play().catch(() => {});
-        playBtn.classList.add("playing");
+    if (currentState < pageElements.length - 1) {
+        if (currentState === 0 && audio.paused) {
+            audio.play().catch(() => {});
+            playBtn.classList.add("playing");
+        }
+        currentState++;
+        playFlip();
+        updateUI();
     }
-
-    currentState++;
-    playFlip();
-    updateUI();
-
-    setTimeout(() => {
-        isFlipping = false;
-    }, 1200); // match CSS transition time
 }
+
+    
 
 function flipPrev() {
     if (isFlipping) return;
