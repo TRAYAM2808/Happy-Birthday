@@ -6,7 +6,6 @@
     <title>Happy Birthday Letter</title>
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=Montserrat:wght@300;400&display=swap" rel="stylesheet">
     <style>
-        /* All your original styles remain exactly the same */
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
             background: linear-gradient(135deg, #0a0a0a, #1a0a14, #0d0a14);
@@ -14,7 +13,6 @@
             font-family: 'Montserrat', sans-serif;
             overflow-x: hidden;
             scroll-behavior: smooth;
-            /* CHANGE 2: Improved touch handling for mobile */
             touch-action: manipulation;
         }
 
@@ -85,7 +83,6 @@
         @keyframes fadeInGlow { to { opacity: 1; } }
         @keyframes fadeIn { to { opacity: 1; } }
 
-        /* Scroll Indicator */
         .scroll {
             position: absolute;
             bottom: 30px;
@@ -104,7 +101,6 @@
 
         .book-section { min-height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 2rem 1rem; position: relative; z-index: 2; }
         
-        /* CHANGE 3: Responsive book sizing for mobile height */
         .book { 
             max-width: 900px; 
             width: 100%; 
@@ -115,7 +111,6 @@
 
         .page { position: absolute; width: 50%; height: 100%; right: 0; transform-origin: left; transform-style: preserve-3d; transition: transform 1.2s cubic-bezier(.6,.1,.25,1); box-shadow: 0 20px 60px rgba(0,0,0,.7); cursor: default; }
         
-        /* CHANGE 4: Added padding adjustments for smaller mobile screens */
         .page-front, .page-back { 
             position: absolute; 
             inset: 0; 
@@ -133,6 +128,7 @@
         .page-front h3 { color: #d4a574; font-size: clamp(1.5rem, 4vw, 2rem); margin-bottom: 1.5rem; text-align: center; font-weight: 400; }
         .page-front p, .page-back p { font-size: clamp(1rem, 3vw, 1.2rem); line-height: 1.8; margin-bottom: 1rem; text-align: justify; }
 
+        .cover { z-index: 100; }
         .cover .page-front { display: flex; flex-direction: column; justify-content: center; align-items: center; cursor: pointer; transition: 0.3s; }
         .cover .page-front:hover { background: linear-gradient(135deg, #22141a, #2a1820); }
         .cover h2 { font-size: clamp(1.8rem, 5vw, 2.8rem); color: #d4a574; font-weight: 300; text-align: center; }
@@ -148,13 +144,103 @@
         .play.playing::before { border: none; width: 10px; height: 12px; left: 11px; top: 10px; border-left: 3px solid #d4a574; border-right: 3px solid #d4a574; }
         .music-info { font-size: 0.7rem; white-space: nowrap; }
 
-        /* CHANGE 5: Added specific Media Query to fix the book layout on phones */
         @media(max-width: 900px) { 
             .book { height: 500px; width: 85vw; } 
             .page { width: 100%; left: 0; } 
             .page-back { left: 0; }
             .music-player { bottom: 15px; right: 15px; padding: 8px 12px; }
         }
+        /* Dark Room Vignette Effect */
+body::after {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    /* Creates a radial gradient that is transparent in the center and dark at the edges */
+    background: radial-gradient(circle, transparent 40%, rgba(0, 0, 0, 0.8) 100%);
+    pointer-events: none; /* Allows clicks to pass through to the book */
+    z-index: 5; /* Sits above particles but below the book navigation if needed */
+}
+
+/* Subtle Pulsing Light for the Book */
+.book-section::before {
+    content: "";
+    position: absolute;
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(circle, rgba(212, 165, 116, 0.1) 0%, transparent 70%);
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1;
+    pointer-events: none;
+    animation: candleFlicker 4s infinite alternate;
+}
+
+@keyframes candleFlicker {
+    0% { opacity: 0.5; transform: translate(-50%, -50%) scale(1); }
+    100% { opacity: 0.8; transform: translate(-50%, -50%) scale(1.05); }
+}
+page-front, .page-back {
+    background-image: url("https://www.transparenttextures.com/patterns/dark-matter.png"); /* Subtle grain */
+    background-color: #1a0f14; /* Your base color */}
+    
+@keyframes pulseGlow {
+    0% { text-shadow: 0 0 5px #d4a574; }
+    50% { text-shadow: 0 0 20px #d4a574; }
+    100% { text-shadow: 0 0 5px #d4a574; }
+}
+.voice-page {
+    margin-top: 4rem;
+    text-align: center;
+}
+
+.voice-text {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.1rem;
+    font-style: italic;
+    color: rgba(212,165,116,.85);
+    cursor: pointer;
+    transition: opacity .3s ease, letter-spacing .3s ease;
+}
+
+.voice-text:hover {
+    opacity: .8;
+    letter-spacing: .1em;
+}
+.dim-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.45);
+    opacity: 0;
+    pointer-events: none;
+    z-index: 4;
+    transition: opacity 0.8s ease;
+}
+
+.dim-overlay.active {
+    opacity: 1;
+}
+.dim-overlay {
+    position: fixed;
+    inset: 0;
+    background: radial-gradient(
+        circle,
+        rgba(0, 0, 0, 0.2) 20%,
+        rgba(0, 0, 0, 0.85) 100%
+    );
+    opacity: 0;
+    pointer-events: none;
+    z-index: 50;
+    transition: opacity 1.2s ease;
+}
+
+.dim-overlay.active {
+    opacity: 1;
+}
+
     </style>
 </head>
 <body>
@@ -175,7 +261,7 @@
     <div class="book" id="book">
         <div class="page cover" id="cover">
             <div class="page-front">
-                <h2>A Letter For You</h2>
+                <h2>From Me To You</h2>
                 <p>Click to open</p>
             </div>
             <div class="page-back"></div>
@@ -186,7 +272,7 @@
         <button class="nav-btn" id="prevBtn">← Previous</button>
         <span class="page-indicator" id="pageIndicator">Cover</span>
         <button class="nav-btn" id="nextBtn">Next →</button>
-        <button class="nav-btn" id="closeBtn" style="display:none;">Close & Replay ↺</button>
+        <button class="nav-btn" id="closeBtn" style="display:none;">Seal🕯️</button>
     </div>
 </section>
 
@@ -201,22 +287,111 @@
 <audio id="pageFlipSound">
     <source src="https://assets.mixkit.co/active_storage/sfx/1101/1101-preview.mp3" type="audio/mpeg">
 </audio>
+<audio id="voiceNote">
+    <source src="https://res.cloudinary.com/ddllaiv3s/video/upload/v1766933357/Jaane_Na_Tu-320kbps_dfkptv.mp3" type="audio/mpeg">
+</audio>
+<div class="dim-overlay" id="dimOverlay"></div>
 
 <script>
+    
 const pagesData = [
     {
-        front: `<h3>Chapter One</h3><p>Your existence is poetry written in flesh and time, a story the universe conspired to tell.</p><p>You are a light that refuses to fade.</p><p>Every year you grow more into yourself, like a vintage wine deepening in complexity and I would savor every moment, every nuance of your being.</p>`,
+        front: `<h3>Author's Note</h3><p>This is not a story meant to be understood all at once.
+It exists in fragments—thoughts that linger longer than they should,
+feelings that were never given permission to speak aloud.<p>
+Read slowly.</p><p>
+Some things are meant to be noticed, not explained.<p></p>`,
         back:  `<p></p>`
     },
     {
-        front: `<h3>Chapter Two</h3><p>Another year, another chapter—still unfinished, still beautifully imperfect.</p><p>You are becoming more authentically yourself.</p>`,
-        back: `<p>And I would read you endlessly, through every plot twist and character development.</p>
-               <p>Because the best stories are the ones that keep surprising us, page after page.</p>`
+        front: `<h3>The Gravity</h3><p>They told me to follow the light, 
+            so I followed you into the dark. Your existence isn't just a life to be celebrated;
+             it is a gravity I never want to escape. If loving you is a fall, I’ve been plummeting since the moment we met.</p>`,
+        back:  `<p></p>`
     },
     {
-        front: `<h3>Chapter Three</h3><p>May this year bring you closer to your dreams, and may you find beauty in every turn.</p><p>Like a book that gets better with each reading, may you discover new depths within yourself.</p>`,
-        back: `<p>Happy Birthday. May your story continue to be extraordinary.</p>`
-    }
+        front: `<h3>The Obsession</h3><p>I would burn every other story I’ve ever read just to keep yours from ending.
+             You are the mystery I don't want solved and the secret I never want to tell.
+              Every year, you don't just grow older—you grow deeper into my soul.
+              And I would read you endlessly, through every plot twist and character development.
+              Because the best stories are the ones that keep surprising us, page after page.</p>`,
+        back: `<p></p>`
+    },
+    {
+        front: `<h3>The Devotion</h3><p>The stars don't shine for you; they envy you. 
+            Today, the world celebrates your birth, but I celebrate the way you destroyed the person I used to be and built someone better in the wreckage. Happy Birthday—you are my favorite haunting.</p>`,
+        back: `<p></p>`
+    },
+    {
+        front: `<h3></h3>
+        <p style="text-align:center; font-style:italic; font-size:1.5rem; line-height:10;">
+                A story never spoken, only felt</p><p style="text-align:center; font-style:italic; font-size:1.5rem;">
+                    — Prince</p>`,
+        back: `<p></p>`
+
+    },
+    {
+        front: `<h3>Chapter One: The First Thought</h3><p>I don’t remember deciding to notice you.
+You appeared in my thoughts the way certain songs do—uninvited, repeatable, impossible to skip.
+Even now, when I try not to think of you, my mind betrays me gently.
+It fills in your absence with imagined details, like it knows you better than I allow myself to.</p>`,
+        back: `<p></p>`
+    },
+    {
+        front: `<h3>Chapter Two: The Habit</h3><p>You became routine without ever becoming ordinary.
+I started seeing you in unrelated places—in late nights, in half-finished thoughts, in moments that should have belonged to someone else.
+Nothing dramatic happened.
+That’s the most unsettling part.
+You stayed without ever asking permission.</p>`,
+        back: `<p></p>`
+    },
+    {
+        front: `<h3>Chapter Three: The Control</h3><p>There are things I could say that would change the shape of everything.
+So I don’t say them.
+Instead, I let the thoughts exist where only I can hear them.
+I carry you carefully, like something fragile I am trusted not to break. So I watch you from a distance keeping my thoughts to myself.</p>`,
+        back: `<p></p>`
+    },
+    {
+        front: `<h3>Chapter Four: The Imagination</h3><p>I imagine you in small, unreasonable ways.
+The way you might look when no one is watching.
+The version of you that exists when the world is quiet and honest.
+When your expression settles into something unedited.
+That version feels more real than the one I’m allowed to know.
+These thoughts are not fantasies.
+They are simply continuations of you, created because my mind refuses to stop.</p>`,
+        back: `<p></p>`
+    },
+    {
+        front: `<h3>Chapter Five: The Day</h3><p>Today, the world pauses long enough to acknowledge that you exist.
+I do too—in my own quiet way.
+This isn’t a confession.
+It’s something quieter, heavier, harder to forget.
+<p>
+This day exist because of you, Happy Birthday.<p>
+If you ever wondered whether someone thinks of you more than they admit—this is that thought.</p>
+<p> —Prince</p>`,
+        back: `<p></p>`
+    },
+    {
+    front: `
+        <h3>Afterword</h3>
+        <p style="text-align:center; font-style:italic; margin-top:3rem;">
+            “I won’t say what this means. If you felt it, you already know.”
+        </p>
+
+        <div class="voice-page">
+            <span class="voice-text" id="voiceBtn">a voice note for you</span>
+        </div>
+
+<p style="text-align:center; font-style:italic; margin-top:3rem; font-weight:600;">
+    “My Vespera”
+</p>
+
+
+    `,
+    back: `<p></p>`
+}   
 ];
 
 const book = document.getElementById("book");
@@ -228,13 +403,20 @@ const pageIndicator = document.getElementById("pageIndicator");
 const flipSound = document.getElementById("pageFlipSound");
 const audio = document.getElementById("mainAudio");
 const playBtn = document.getElementById("playBtn");
+audio.volume = 0.6;      // background music default
+voiceNote.volume = 1.0; // voice stays clear
+const dimOverlay = document.getElementById("dimOverlay");
+
+
 
 let currentState = 0; 
 const pageElements = [cover];
 
+// Setup Pages
 pagesData.forEach((data, index) => {
     const page = document.createElement("div");
     page.className = "page";
+    // Fix: Initial layering so pages are hidden behind cover
     page.style.zIndex = pagesData.length - index; 
     page.innerHTML = `<div class="page-front">${data.front}</div><div class="page-back">${data.back}</div>`;
     book.appendChild(page);
@@ -243,6 +425,18 @@ pagesData.forEach((data, index) => {
 
 function updateUI() {
     prevBtn.disabled = (currentState === 0);
+    
+    // Fix: Refresh Z-Index for all elements based on current flip state
+    pageElements.forEach((el, i) => {
+        if (i < currentState) {
+            el.classList.add("flipped");
+            el.style.zIndex = 100 + i;
+        } else {
+            el.classList.remove("flipped");
+            el.style.zIndex = pageElements.length - i;
+        }
+    });
+
     if (currentState === pageElements.length - 1) {
         nextBtn.style.display = "none";
         closeBtn.style.display = "block";
@@ -253,16 +447,12 @@ function updateUI() {
     pageIndicator.textContent = currentState === 0 ? "Cover" : `Page ${currentState} of ${pagesData.length}`;
 }
 
-// CHANGE 6: Added music trigger to the flip function because 
-// mobile browsers only allow audio to start after a user tap.
 function flipNext() {
     if (currentState < pageElements.length - 1) {
         if (currentState === 0 && audio.paused) {
-            audio.play();
+            audio.play().catch(() => {});
             playBtn.classList.add("playing");
         }
-        pageElements[currentState].classList.add("flipped");
-        pageElements[currentState].style.zIndex = 100 + currentState;
         currentState++;
         playFlip();
         updateUI();
@@ -272,8 +462,6 @@ function flipNext() {
 function flipPrev() {
     if (currentState > 0) {
         currentState--;
-        pageElements[currentState].classList.remove("flipped");
-        pageElements[currentState].style.zIndex = pageElements.length - currentState;
         playFlip();
         updateUI();
     }
@@ -281,14 +469,15 @@ function flipPrev() {
 
 function closeBook() {
     let delay = 0;
-    for (let i = currentState - 1; i >= 0; i--) {
+    // Iterate backwards to close smoothly
+    for (let i = currentState; i > 0; i--) {
         setTimeout(() => {
-            pageElements[i].classList.remove("flipped");
-            pageElements[i].style.zIndex = pageElements.length - i;
+            currentState--;
             playFlip();
-            if (i === 0) { currentState = 0; updateUI(); }
+            updateUI();
         }, delay);
-        delay += 250; 
+        delay += 150; 
+        flipSound.volume = 0.2;
     }
 }
 
@@ -314,10 +503,87 @@ for(let i = 0; i < 50; i++) {
     d.className = "particle";
     d.style.left = Math.random() * 100 + "%";
     d.style.animationDuration = (10 + Math.random() * 10) + "s";
+    d.style.animationDelay = Math.random() * 5 + "s";
     pContainer.appendChild(d);
 }
+function fadeAudio(audioEl, targetVolume, duration = 600) {
+    const step = 50;
+    const volumeStep = (targetVolume - audioEl.volume) / (duration / step);
 
+    const fade = setInterval(() => {
+        audioEl.volume += volumeStep;
+        if (
+            (volumeStep > 0 && audioEl.volume >= targetVolume) ||
+            (volumeStep < 0 && audioEl.volume <= targetVolume)
+        ) {
+            audioEl.volume = targetVolume;
+            clearInterval(fade);
+        }
+    }, step);
+}
+function enablePageClick() {
+    pageElements.forEach((page, index) => {
+        page.addEventListener("click", (e) => {
+            // Prevent clicking buttons from flipping pages
+            if (
+                e.target.closest(".nav-btn") ||
+                e.target.closest(".play") ||
+                e.target.closest(".voice-btn")
+            ) return;
+
+            // Only flip if this page is the current one
+            if (index === currentState) {
+                flipNext();
+            }
+        });
+    });
+}
+
+
+document.addEventListener("click", (e) => {
+    if (e.target && e.target.id === "voiceBtn") {
+        const bgMusic = document.getElementById("mainAudio");
+        const voice = document.getElementById("voiceNote");
+
+        if (voice.paused) {
+            fadeAudio(bgMusic, 0.15, 800); // lower background
+            voice.play().catch(() => {});
+            e.target.textContent = "listening…";
+        } else {
+            voice.pause();
+            fadeAudio(bgMusic, 0.6, 800); // restore background
+            e.target.textContent = "a voice note for you";
+        }
+
+        voice.onended = () => {
+            fadeAudio(bgMusic, 0.6, 800);
+            e.target.textContent = "a voice note for you";
+        };
+    }
+});
+voiceNote.addEventListener("play", () => {
+    audio.volume = 0.25;               // lower background music
+    dimOverlay.classList.add("active"); // dim room
+});
+
+voiceNote.addEventListener("pause", () => {
+    audio.volume = 0.6;
+    dimOverlay.classList.remove("active");
+});
+
+voiceNote.addEventListener("ended", () => {
+    audio.volume = 0.6;
+    dimOverlay.classList.remove("active");
+});
+
+
+
+
+
+// Ensure proper start state
 updateUI();
+enablePageClick();
+
 </script>
 </body>
 </html>
