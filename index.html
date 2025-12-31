@@ -421,7 +421,6 @@ const flipSound = document.getElementById("pageFlipSound");
 const audio = document.getElementById("mainAudio");
 const playBtn = document.getElementById("playBtn");
 audio.volume = 0.6;      // background music default
-audio.volume = 0.8;      // background music default
 voiceNote.volume = 1.0; // voice stays clear
 const dimOverlay = document.getElementById("dimOverlay");
 
@@ -481,23 +480,18 @@ updateUI();
 
 
 function flipPrev() {
-    if (isFlipping) return;
-    if (currentState <= 0) return;
+if (isFlipping) return;
+if (currentState <= 0) return;
 
-    isFlipping = true;
+isFlipping = true;
 
-    currentState--;
-    playFlip();
-    updateUI();
+currentState--;
+playFlip();
+updateUI();
 
-    setTimeout(() => {
-        isFlipping = false;
-    }, 1200);
-    if (currentState > 0) {
-        currentState--;
-        playFlip();
-        updateUI();
-    }
+setTimeout(() => {
+isFlipping = false;
+}, 1200);
 }
 
 
@@ -617,12 +611,14 @@ dimOverlay.classList.add("active"); // dim room
 });
 
 voiceNote.addEventListener("pause", () => {
-audio.volume = 0.6;
+    audio.volume = 0.5;
+    audio.volume = 0.6;
 dimOverlay.classList.remove("active");
 });
 
 voiceNote.addEventListener("ended", () => {
-audio.volume = 0.6;
+    audio.volume = 0.5;
+    audio.volume = 0.6;
 dimOverlay.classList.remove("active");
 });
 
