@@ -427,6 +427,7 @@ const dimOverlay = document.getElementById("dimOverlay");
 
 
 let currentState = 0; 
+let isFlipping = false;
 const pageElements = [cover];
 
 // Setup Pages
@@ -465,26 +466,47 @@ function updateUI() {
 }
 
 function flipNext() {
-    if (currentState < pageElements.length - 1) {
-        if (currentState === 0 && audio.paused) {
-            audio.play().catch(() => {});
-            playBtn.classList.add("playing");
-        }
-        currentState++;
-        playFlip();
-        updateUI();
+    if (isFlipping) return;
+    if (currentState >= pageElements.length - 1) return;
+
+    isFlipping = true;
+
+    if (currentState === 0 && audio.paused) {
+        audio.play().catch(() => {});
+        playBtn.classList.add("playing");
     }
+
+    currentState++;
+    playFlip();
+    updateUI();
+
+    setTimeout(() => {
+        isFlipping = false;
+    }, 1200); // match CSS transition time
 }
 
 function flipPrev() {
-    if (currentState > 0) {
-        currentState--;
-        playFlip();
-        updateUI();
-    }
+    if (isFlipping) return;
+    if (currentState <= 0) return;
+
+    isFlipping = true;
+
+    currentState--;
+    playFlip();
+    updateUI();
+
+    setTimeout(() => {
+        isFlipping = false;
+    }, 1200);
 }
+
+
 function closeBook() {
-    let steps = currentState;
+    if (isFlipping || currentState === 0) return;
+
+    isFlipping = true;
+
+    const steps = currentState;
     let delay = 0;
 
     for (let i = 0; i < steps; i++) {
@@ -494,14 +516,17 @@ function closeBook() {
             updateUI();
 
             if (currentState === 0) {
-                updateUI();
+                setTimeout(() => {
+                    isFlipping = false;
+                }, 1200);
             }
         }, delay);
+
         delay += 150;
          flipSound.volume = 0.3;
     }
-
 }
+
 
 
 
