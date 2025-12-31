@@ -223,23 +223,6 @@ page-front, .page-back {
 .dim-overlay.active {
     opacity: 1;
 }
-.dim-overlay {
-    position: fixed;
-    inset: 0;
-    background: radial-gradient(
-        circle,
-        rgba(0, 0, 0, 0.2) 20%,
-        rgba(0, 0, 0, 0.85) 100%
-    );
-    opacity: 0;
-    pointer-events: none;
-    z-index: 50;
-    transition: opacity 1.2s ease;
-}
-
-.dim-overlay.active {
-    opacity: 1;
-}
 
     </style>
 </head>
@@ -272,7 +255,7 @@ page-front, .page-back {
         <button class="nav-btn" id="prevBtn">← Previous</button>
         <span class="page-indicator" id="pageIndicator">Cover</span>
         <button class="nav-btn" id="nextBtn">Next →</button>
-        <button class="nav-btn" id="closeBtn" style="display:none;">Seal🕯️</button>
+        <button class="nav-btn" id="closeBtn" style="display:none;">Seal ✦</button>
     </div>
 </section>
 
@@ -288,9 +271,8 @@ page-front, .page-back {
     <source src="https://assets.mixkit.co/active_storage/sfx/1101/1101-preview.mp3" type="audio/mpeg">
 </audio>
 <audio id="voiceNote">
-    <source src="https://res.cloudinary.com/ddllaiv3s/video/upload/v1766933357/Jaane_Na_Tu-320kbps_dfkptv.mp3" type="audio/mpeg">
+    <source src="https://www.orangefreesounds.com/wp-content/uploads/2021/09/Emotional-background-piano-solo.mp3" type="audio/mpeg">
 </audio>
-<div class="dim-overlay" id="dimOverlay"></div>
 
 <script>
     
@@ -325,7 +307,7 @@ Some things are meant to be noticed, not explained.<p></p>`,
     {
         front: `<h3></h3>
         <p style="text-align:center; font-style:italic; font-size:1.5rem; line-height:10;">
-                A story never spoken, only felt</p><p style="text-align:center; font-style:italic; font-size:1.5rem;">
+                The story that never spoken, just felt</p><p style="text-align:center; font-style:italic; font-size:1.5rem;">
                     — Prince</p>`,
         back: `<p></p>`
 
@@ -380,14 +362,14 @@ If you ever wondered whether someone thinks of you more than they admit—this i
             “I won’t say what this means. If you felt it, you already know.”
         </p>
 
+
         <div class="voice-page">
             <span class="voice-text" id="voiceBtn">a voice note for you</span>
         </div>
 
-<p style="text-align:center; font-style:italic; margin-top:3rem; font-weight:600;">
+        <p style="text-align:center; font-style:italic; margin-top:3rem; font-weight:600;">
     “My Vespera”
 </p>
-
 
     `,
     back: `<p></p>`
@@ -406,7 +388,6 @@ const playBtn = document.getElementById("playBtn");
 audio.volume = 0.6;      // background music default
 voiceNote.volume = 1.0; // voice stays clear
 const dimOverlay = document.getElementById("dimOverlay");
-
 
 
 let currentState = 0; 
@@ -521,24 +502,6 @@ function fadeAudio(audioEl, targetVolume, duration = 600) {
         }
     }, step);
 }
-function enablePageClick() {
-    pageElements.forEach((page, index) => {
-        page.addEventListener("click", (e) => {
-            // Prevent clicking buttons from flipping pages
-            if (
-                e.target.closest(".nav-btn") ||
-                e.target.closest(".play") ||
-                e.target.closest(".voice-btn")
-            ) return;
-
-            // Only flip if this page is the current one
-            if (index === currentState) {
-                flipNext();
-            }
-        });
-    });
-}
-
 
 document.addEventListener("click", (e) => {
     if (e.target && e.target.id === "voiceBtn") {
@@ -561,29 +524,11 @@ document.addEventListener("click", (e) => {
         };
     }
 });
-voiceNote.addEventListener("play", () => {
-    audio.volume = 0.25;               // lower background music
-    dimOverlay.classList.add("active"); // dim room
-});
-
-voiceNote.addEventListener("pause", () => {
-    audio.volume = 0.6;
-    dimOverlay.classList.remove("active");
-});
-
-voiceNote.addEventListener("ended", () => {
-    audio.volume = 0.6;
-    dimOverlay.classList.remove("active");
-});
-
-
 
 
 
 // Ensure proper start state
 updateUI();
-enablePageClick();
-
 </script>
 </body>
 </html>
