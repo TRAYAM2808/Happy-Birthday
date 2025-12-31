@@ -6,22 +6,31 @@
     <title>Happy Birthday Letter</title>
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=Montserrat:wght@300;400&display=swap" rel="stylesheet">
     <style>
-        html, body {
-            margin: 0;
-            padding: 0;
-            width: 100%;
-            max-width: 100%;
-            overflow-x: hidden;
-            background: #0a0a0a;
-        }
         * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        html, body {
+            width: 100%;
+            height: 100%;
+            overflow-x: hidden;
+            position: fixed;
+        }
+        
         body {
             background: linear-gradient(135deg, #0a0a0a, #1a0a14, #0d0a14);
             color: #e8d5d5;
             font-family: 'Montserrat', sans-serif;
-            overflow-x: hidden;
             scroll-behavior: smooth;
-            touch-action: manipulation;
+            touch-action: pan-y;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        /* Scrollable container */
+        .scroll-container {
+            height: 100vh;
+            height: 100dvh;
+            overflow-y: auto;
+            overflow-x: hidden;
+            -webkit-overflow-scrolling: touch;
         }
 
         /* Particles Background */
@@ -56,18 +65,19 @@
         /* Hero Section */
         .hero {
             min-height: 100vh;
+            min-height: 100dvh;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
             position: relative;
             z-index: 2;
-            padding: 2rem;
+            padding: 2rem 1.5rem;
         }
 
         .hero h1 {
             font-family: 'Cormorant Garamond', serif;
-            font-size: clamp(3rem, 10vw, 7rem);
+            font-size: clamp(2.5rem, 10vw, 7rem);
             font-weight: 300;
             text-align: center;
             color: #d4a574;
@@ -79,8 +89,8 @@
 
         .hero-message {
             font-family: 'Cormorant Garamond', serif;
-            font-size: clamp(1.2rem, 3vw, 1.8rem);
-            max-width: 700px;
+            font-size: clamp(1.1rem, 3vw, 1.8rem);
+            max-width: 90%;
             text-align: center;
             margin-top: 2rem;
             line-height: 1.8;
@@ -98,7 +108,7 @@
             left: 50%;
             transform: translateX(-50%);
             color: #d4a574;
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             opacity: 0.7;
             animation: bounce 2s infinite;
         }
@@ -109,67 +119,111 @@
         }
 
         .book-section { 
-            min-height: 100vh; 
+            min-height: 100vh;
+            min-height: 100dvh;
             display: flex; 
             flex-direction: column; 
             justify-content: center; 
             align-items: center; 
-            padding: 2rem 1rem; 
+            padding: 2rem 1rem 6rem 1rem;
             position: relative; 
             z-index: 2; 
-            overflow: hidden;
-            max-width: 100%;
         }
-
+        
         .book { 
             max-width: 900px; 
-            width: 100%; 
-            height: clamp(400px, 70vh, 600px); 
+            width: calc(100% - 2rem);
+            height: clamp(450px, 65vh, 600px); 
             position: relative; 
             perspective: 2000px;
-            overflow: hidden;
-            max-width: 100%;
+            margin: 0 auto;
         }
 
         .page { 
             position: absolute; 
-            width: 50%; 
+            width: 100%;
             height: 100%; 
-            right: 0; 
+            left: 0;
             transform-origin: left; 
             transform-style: preserve-3d; 
             transition: transform 1.2s cubic-bezier(.6,.1,.25,1); 
             box-shadow: 0 20px 60px rgba(0,0,0,.7); 
             cursor: pointer;
+            -webkit-tap-highlight-color: transparent;
         }
         
         .page-front, .page-back { 
             position: absolute; 
             inset: 0; 
-            padding: clamp(1.5rem, 5vw, 3rem); 
+            padding: clamp(1.5rem, 4vw, 3rem); 
             background: linear-gradient(135deg, #1a0f14, #2a1820); 
             border: 1px solid rgba(212,165,116,.4); 
             backface-visibility: hidden; 
             font-family: 'Cormorant Garamond', serif; 
             color: #c9a6a6; 
             overflow-y: auto;
+            -webkit-overflow-scrolling: touch;
             background-image: url("https://www.transparenttextures.com/patterns/dark-matter.png");
             background-color: #1a0f14;
         }
-        .page-back { transform: rotateY(180deg); background: linear-gradient(135deg, #140a10, #1f0f17); }
-        .page.flipped { transform: rotateY(-180deg); }
+        
+        .page-back { 
+            transform: rotateY(180deg); 
+            background: linear-gradient(135deg, #140a10, #1f0f17); 
+        }
+        
+        .page.flipped { 
+            transform: rotateY(-180deg); 
+        }
 
-        .page-front h3 { color: #d4a574; font-size: clamp(1.5rem, 4vw, 2rem); margin-bottom: 1.5rem; text-align: center; font-weight: 400; }
-        .page-front p, .page-back p { font-size: clamp(1rem, 3vw, 1.2rem); line-height: 1.8; margin-bottom: 1rem; text-align: justify; }
+        .page-front h3 { 
+            color: #d4a574; 
+            font-size: clamp(1.4rem, 4vw, 2rem); 
+            margin-bottom: 1.5rem; 
+            text-align: center; 
+            font-weight: 400; 
+        }
+        
+        .page-front p, .page-back p { 
+            font-size: clamp(0.95rem, 3vw, 1.2rem); 
+            line-height: 1.8; 
+            margin-bottom: 1rem; 
+            text-align: justify; 
+        }
 
         .cover { z-index: 100; }
-        .cover .page-front { display: flex; flex-direction: column; justify-content: center; align-items: center; cursor: pointer; transition: 0.3s; }
-        .cover .page-front:hover { background: linear-gradient(135deg, #22141a, #2a1820); }
-        .cover h2 { font-size: clamp(1.8rem, 5vw, 2.8rem); color: #d4a574; font-weight: 300; text-align: center; }
+        .cover .page-front { 
+            display: flex; 
+            flex-direction: column; 
+            justify-content: center; 
+            align-items: center; 
+            cursor: pointer; 
+            transition: 0.3s;
+            overflow: hidden;
+        }
+        .cover .page-front:hover { 
+            background: linear-gradient(135deg, #22141a, #2a1820); 
+        }
+        .cover h2 { 
+            font-size: clamp(1.6rem, 5vw, 2.8rem); 
+            color: #d4a574; 
+            font-weight: 300; 
+            text-align: center; 
+        }
 
-        .nav-controls { margin-top: 2rem; display: flex; gap: 0.5rem; align-items: center; min-height: 50px; flex-wrap: wrap; justify-content: center; }
+        .nav-controls { 
+            margin-top: 2rem; 
+            display: flex; 
+            gap: 0.5rem; 
+            align-items: center; 
+            min-height: 50px; 
+            flex-wrap: wrap; 
+            justify-content: center;
+            padding: 0 1rem;
+        }
+        
         .nav-btn { 
-            padding: 10px 20px; 
+            padding: 12px 20px; 
             background: rgba(139,44,61,.3); 
             border: 1px solid rgba(212,165,116,.5); 
             color: #d4a574; 
@@ -177,27 +231,84 @@
             border-radius: 5px; 
             transition: all 0.3s ease; 
             font-family: 'Montserrat', sans-serif; 
-            font-size: 0.8rem;
+            font-size: 0.85rem;
             user-select: none;
             -webkit-tap-highlight-color: transparent;
+            touch-action: manipulation;
         }
-        .nav-btn:hover:not(:disabled) { background: rgba(139,44,61,.5); }
-        .nav-btn:disabled { opacity: 0.3; cursor: not-allowed; pointer-events: none; }
-        .page-indicator { color: #d4a574; font-family: 'Cormorant Garamond', serif; min-width: 80px; text-align: center; font-size: 0.9rem; }
-
-        .music-player { position: fixed; bottom: 20px; right: 20px; z-index: 100; background: rgba(20,10,15,.95); border: 1px solid rgba(212,165,116,.4); padding: 10px 15px; border-radius: 50px; display: flex; gap: 10px; align-items: center; }
-        .play { width: 32px; height: 32px; border-radius: 50%; background: #8b2c3d; border: none; cursor: pointer; position: relative; }
-        .play::before { content:''; position: absolute; left: 12px; top: 9px; border-style: solid; border-width: 7px 0 7px 12px; border-color: transparent transparent transparent #d4a574; }
-        .play.playing::before { border: none; width: 10px; height: 12px; left: 11px; top: 10px; border-left: 3px solid #d4a574; border-right: 3px solid #d4a574; }
-        .music-info { font-size: 0.7rem; white-space: nowrap; }
-
-        @media(max-width: 900px) { 
-            .book { height: 500px; width: 85vw; } 
-            .page { width: 100%; left: 0; } 
-            .page-back { left: 0; }
-            .music-player { bottom: 15px; right: 15px; padding: 8px 12px; }
+        
+        .nav-btn:active:not(:disabled) { 
+            background: rgba(139,44,61,.6); 
+            transform: scale(0.98);
+        }
+        
+        .nav-btn:disabled { 
+            opacity: 0.3; 
+            cursor: not-allowed; 
+            pointer-events: none; 
+        }
+        
+        .page-indicator { 
+            color: #d4a574; 
+            font-family: 'Cormorant Garamond', serif; 
+            min-width: 100px; 
+            text-align: center; 
+            font-size: 0.9rem; 
         }
 
+        .music-player { 
+            position: fixed; 
+            bottom: 20px; 
+            right: 20px; 
+            z-index: 100; 
+            background: rgba(20,10,15,.95); 
+            border: 1px solid rgba(212,165,116,.4); 
+            padding: 10px 15px; 
+            border-radius: 50px; 
+            display: flex; 
+            gap: 10px; 
+            align-items: center;
+            -webkit-tap-highlight-color: transparent;
+        }
+        
+        .play { 
+            width: 32px; 
+            height: 32px; 
+            border-radius: 50%; 
+            background: #8b2c3d; 
+            border: none; 
+            cursor: pointer; 
+            position: relative;
+            flex-shrink: 0;
+            -webkit-tap-highlight-color: transparent;
+        }
+        
+        .play::before { 
+            content:''; 
+            position: absolute; 
+            left: 12px; 
+            top: 9px; 
+            border-style: solid; 
+            border-width: 7px 0 7px 12px; 
+            border-color: transparent transparent transparent #d4a574; 
+        }
+        
+        .play.playing::before { 
+            border: none; 
+            width: 10px; 
+            height: 12px; 
+            left: 11px; 
+            top: 10px; 
+            border-left: 3px solid #d4a574; 
+            border-right: 3px solid #d4a574; 
+        }
+        
+        .music-info { 
+            font-size: 0.7rem; 
+            white-space: nowrap; 
+        }
+
+        /* Dark Room Vignette Effect */
         body::after {
             content: "";
             position: fixed;
@@ -208,10 +319,9 @@
             background: radial-gradient(circle, transparent 40%, rgba(0, 0, 0, 0.8) 100%);
             pointer-events: none;
             z-index: 5;
-            inset: 0;
-            overflow: hidden;
         }
 
+        /* Subtle Pulsing Light for the Book */
         .book-section::before {
             content: "";
             position: absolute;
@@ -230,15 +340,9 @@
             0% { opacity: 0.5; transform: translate(-50%, -50%) scale(1); }
             100% { opacity: 0.8; transform: translate(-50%, -50%) scale(1.05); }
         }
-
-        @keyframes pulseGlow {
-            0% { text-shadow: 0 0 5px #d4a574; }
-            50% { text-shadow: 0 0 20px #d4a574; }
-            100% { text-shadow: 0 0 5px #d4a574; }
-        }
-
+        
         .voice-page {
-            margin-top: 4rem;
+            margin-top: 3rem;
             text-align: center;
         }
 
@@ -249,11 +353,13 @@
             color: rgba(212,165,116,.85);
             cursor: pointer;
             transition: opacity .3s ease, letter-spacing .3s ease;
+            -webkit-tap-highlight-color: transparent;
+            padding: 10px;
+            display: inline-block;
         }
 
-        .voice-text:hover {
-            opacity: .8;
-            letter-spacing: .1em;
+        .voice-text:active {
+            opacity: .6;
         }
 
         .dim-overlay {
@@ -268,52 +374,94 @@
             pointer-events: none;
             z-index: 50;
             transition: opacity 1.2s ease;
-            overflow: hidden;
         }
 
         .dim-overlay.active {
             opacity: 1;
         }
 
-        @media (max-width: 768px) {
-            .hero,
-            .book-section {
-                min-height: 100svh;
-                min-height: -webkit-fill-available;
+        /* Mobile optimizations */
+        @media(max-width: 900px) { 
+            .hero h1 {
+                font-size: clamp(2rem, 12vw, 5rem);
+            }
+            
+            .book { 
+                height: clamp(400px, 60vh, 550px);
+                width: calc(100% - 1rem);
+            }
+            
+            .page-front, .page-back {
+                padding: 1.5rem 1.25rem;
+            }
+            
+            .music-player { 
+                bottom: 15px; 
+                right: 15px; 
+                padding: 8px 12px; 
+            }
+            
+            .music-info {
+                display: none;
+            }
+            
+            .nav-btn {
+                font-size: 0.8rem;
+                padding: 10px 16px;
+            }
+        }
+        
+        @media(max-width: 480px) {
+            .hero {
+                padding: 1.5rem 1rem;
+            }
+            
+            .book {
+                width: calc(100% - 0.5rem);
+            }
+            
+            .page-front h3 {
+                font-size: clamp(1.2rem, 5vw, 1.6rem);
+            }
+            
+            .page-front p, .page-back p {
+                font-size: clamp(0.9rem, 3.5vw, 1.1rem);
             }
         }
     </style>
 </head>
 <body>
 
-<div class="particles" id="particles"></div>
+<div class="scroll-container">
+    <div class="particles" id="particles"></div>
 
-<section class="hero">
-    <h1>Happy Birthday</h1>
-    <p class="hero-message">In the quiet moments between heartbeats, where light meets shadow,
-        today exists only for you. May this year unfold like a story worth telling,
-        filled with magic, mystery, and moments that take your breath away.</p>
-    <div class="scroll">↓ Scroll to open your letter ↓</div>
-</section>
+    <section class="hero">
+        <h1>Happy Birthday</h1>
+        <p class="hero-message">In the quiet moments between heartbeats, where light meets shadow,
+            today exists only for you. May this year unfold like a story worth telling,
+            filled with magic, mystery, and moments that take your breath away.</p>
+        <div class="scroll">↓ Scroll to open your letter ↓</div>
+    </section>
 
-<section class="book-section">
-    <div class="book" id="book">
-        <div class="page cover" id="cover">
-            <div class="page-front">
-                <h2>From Me To You</h2>
-                <p>Click to open</p>
+    <section class="book-section">
+        <div class="book" id="book">
+            <div class="page cover" id="cover">
+                <div class="page-front">
+                    <h2>From Me To You</h2>
+                    <p>Click to open</p>
+                </div>
+                <div class="page-back"></div>
             </div>
-            <div class="page-back"></div>
         </div>
-    </div>
-    
-    <div class="nav-controls">
-        <button class="nav-btn" id="prevBtn">← Previous</button>
-        <span class="page-indicator" id="pageIndicator">Cover</span>
-        <button class="nav-btn" id="nextBtn">Next →</button>
-        <button class="nav-btn" id="closeBtn" style="display:none;">Seal🕯️</button>
-    </div>
-</section>
+        
+        <div class="nav-controls">
+            <button class="nav-btn" id="prevBtn">← Previous</button>
+            <span class="page-indicator" id="pageIndicator">Cover</span>
+            <button class="nav-btn" id="nextBtn">Next →</button>
+            <button class="nav-btn" id="closeBtn" style="display:none;">Seal🕯️</button>
+        </div>
+    </section>
+</div>
 
 <div class="music-player">
     <button class="play" id="playBtn"></button>
@@ -366,7 +514,6 @@ Some things are meant to be noticed, not explained.<p></p>`,
                 A story never spoken, only felt</p><p style="text-align:center; font-style:italic; font-size:1.5rem;">
                     — Prince</p>`,
         back: `<p></p>`
-
     },
     {
         front: `<h3>Chapter One: The First Thought</h3><p>I don't remember deciding to notice you.
@@ -535,11 +682,13 @@ function playFlip() {
     flipSound.play().catch(() => {});
 }
 
+// Event handlers
 cover.onclick = (e) => {
-    if (!e.target.closest("#voiceBtn")) {
+    if (!e.target.closest(".voice-text") && !e.target.id === "voiceBtn") {
         flipNext();
     }
 };
+
 nextBtn.onclick = flipNext;
 prevBtn.onclick = flipPrev;
 closeBtn.onclick = closeBook;
@@ -554,6 +703,7 @@ playBtn.onclick = () => {
     }
 };
 
+// Particles
 const pContainer = document.getElementById("particles");
 for(let i = 0; i < 50; i++) {
     let d = document.createElement("div");
