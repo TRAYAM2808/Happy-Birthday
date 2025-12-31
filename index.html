@@ -305,7 +305,7 @@ page-front, .page-back {
     <source src="https://assets.mixkit.co/active_storage/sfx/1101/1101-preview.mp3" type="audio/mpeg">
 </audio>
 <audio id="voiceNote">
-    <source src="https://res.cloudinary.com/ddllaiv3s/video/upload/v1766933357/Jaane_Na_Tu-320kbps_dfkptv.mp3" type="audio/mpeg">
+    <source src="https://res.cloudinary.com/ddllaiv3s/video/upload/v1767190228/Jaane_Na_Tu-320kbps_ejmzho.mp3" type="audio/mpeg">
 </audio>
 <div class="dim-overlay" id="dimOverlay"></div>
 
@@ -485,6 +485,10 @@ function stopAllAudio() {
     // Stop voice note
     voiceNote.pause();
     voiceNote.currentTime = 0;
+    
+    // Reset voice text ✅ ADD THIS
+     const voiceBtn = document.getElementById("voiceBtn");
+    if (voiceBtn) voiceBtn.textContent = "a voice note for you";
 
     // Remove dim overlay
     dimOverlay.classList.remove("active");
