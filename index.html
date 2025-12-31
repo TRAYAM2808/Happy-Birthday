@@ -549,7 +549,11 @@ function playFlip() {
 cover.onclick = flipNext;
 nextBtn.onclick = flipNext;
 prevBtn.onclick = flipPrev;
-closeBtn.onclick = closeBook;
+closeBtn.onclick = () => {
+    stopAllAudio(); // 🔥 runs inside direct user gesture
+    closeBook();
+};
+
 
 playBtn.onclick = () => {
     if (audio.paused) { audio.play(); playBtn.classList.add("playing"); } 
