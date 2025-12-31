@@ -305,7 +305,7 @@ page-front, .page-back {
     <source src="https://assets.mixkit.co/active_storage/sfx/1101/1101-preview.mp3" type="audio/mpeg">
 </audio>
 <audio id="voiceNote">
-    <source src="https://res.cloudinary.com/ddllaiv3s/video/upload/v1767190228/Jaane_Na_Tu-320kbps_ejmzho.mp3" type="audio/mpeg">
+    <source src="https://res.cloudinary.com/ddllaiv3s/video/upload/v1766933357/Jaane_Na_Tu-320kbps_dfkptv.mp3" type="audio/mpeg">
 </audio>
 <div class="dim-overlay" id="dimOverlay"></div>
 
@@ -611,12 +611,12 @@ voiceNote.addEventListener("play", () => {
 });
 
 voiceNote.addEventListener("pause", () => {
-    audio.volume = 0.6;
+    audio.volume = 0.5;
     dimOverlay.classList.remove("active");
 });
 
 voiceNote.addEventListener("ended", () => {
-    audio.volume = 0.6;
+    audio.volume = 0.5;
     dimOverlay.classList.remove("active");
 });
 
@@ -631,4 +631,3 @@ enablePageClick();
 </script>
 </body>
 </html>
-
