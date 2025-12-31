@@ -7,30 +7,13 @@
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=Montserrat:wght@300;400&display=swap" rel="stylesheet">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        
-        html, body {
-            width: 100%;
-            height: 100%;
-            overflow-x: hidden;
-            position: fixed;
-        }
-        
         body {
             background: linear-gradient(135deg, #0a0a0a, #1a0a14, #0d0a14);
             color: #e8d5d5;
             font-family: 'Montserrat', sans-serif;
-            scroll-behavior: smooth;
-            touch-action: pan-y;
-            -webkit-overflow-scrolling: touch;
-        }
-
-        /* Scrollable container */
-        .scroll-container {
-            height: 100vh;
-            height: 100dvh;
-            overflow-y: auto;
             overflow-x: hidden;
-            -webkit-overflow-scrolling: touch;
+            scroll-behavior: smooth;
+            touch-action: manipulation;
         }
 
         /* Particles Background */
@@ -42,7 +25,6 @@
             height: 100%;
             pointer-events: none;
             z-index: 1;
-            overflow: hidden;
         }
 
         .particle {
@@ -65,19 +47,18 @@
         /* Hero Section */
         .hero {
             min-height: 100vh;
-            min-height: 100dvh;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
             position: relative;
             z-index: 2;
-            padding: 2rem 1.5rem;
+            padding: 2rem;
         }
 
         .hero h1 {
             font-family: 'Cormorant Garamond', serif;
-            font-size: clamp(2.5rem, 10vw, 7rem);
+            font-size: clamp(3rem, 10vw, 7rem);
             font-weight: 300;
             text-align: center;
             color: #d4a574;
@@ -89,8 +70,8 @@
 
         .hero-message {
             font-family: 'Cormorant Garamond', serif;
-            font-size: clamp(1.1rem, 3vw, 1.8rem);
-            max-width: 90%;
+            font-size: clamp(1.2rem, 3vw, 1.8rem);
+            max-width: 700px;
             text-align: center;
             margin-top: 2rem;
             line-height: 1.8;
@@ -108,7 +89,7 @@
             left: 50%;
             transform: translateX(-50%);
             color: #d4a574;
-            font-size: 0.85rem;
+            font-size: 0.9rem;
             opacity: 0.7;
             animation: bounce 2s infinite;
         }
@@ -118,350 +99,182 @@
             50% { transform: translateX(-50%) translateY(-10px); }
         }
 
-        .book-section { 
-            min-height: 100vh;
-            min-height: 100dvh;
-            display: flex; 
-            flex-direction: column; 
-            justify-content: center; 
-            align-items: center; 
-            padding: 2rem 1rem 6rem 1rem;
-            position: relative; 
-            z-index: 2; 
-        }
+        .book-section { min-height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 2rem 1rem; position: relative; z-index: 2; }
         
         .book { 
             max-width: 900px; 
-            width: calc(100% - 2rem);
-            height: clamp(450px, 65vh, 600px); 
+            width: 100%; 
+            height: clamp(400px, 70vh, 600px); 
             position: relative; 
-            perspective: 2000px;
-            margin: 0 auto;
+            perspective: 2000px; 
         }
 
-        .page { 
-            position: absolute; 
-            width: 100%;
-            height: 100%; 
-            left: 0;
-            transform-origin: left; 
-            transform-style: preserve-3d; 
-            transition: transform 1.2s cubic-bezier(.6,.1,.25,1); 
-            box-shadow: 0 20px 60px rgba(0,0,0,.7); 
-            cursor: pointer;
-            -webkit-tap-highlight-color: transparent;
-        }
+        .page { position: absolute; width: 50%; height: 100%; right: 0; transform-origin: left; transform-style: preserve-3d; transition: transform 1.2s cubic-bezier(.6,.1,.25,1); box-shadow: 0 20px 60px rgba(0,0,0,.7); cursor: default; }
         
         .page-front, .page-back { 
             position: absolute; 
             inset: 0; 
-            padding: clamp(1.5rem, 4vw, 3rem); 
+            padding: clamp(1.5rem, 5vw, 3rem); 
             background: linear-gradient(135deg, #1a0f14, #2a1820); 
             border: 1px solid rgba(212,165,116,.4); 
             backface-visibility: hidden; 
             font-family: 'Cormorant Garamond', serif; 
             color: #c9a6a6; 
-            overflow-y: auto;
-            -webkit-overflow-scrolling: touch;
-            background-image: url("https://www.transparenttextures.com/patterns/dark-matter.png");
-            background-color: #1a0f14;
+            overflow-y: auto; 
         }
-        
-        .page-back { 
-            transform: rotateY(180deg); 
-            background: linear-gradient(135deg, #140a10, #1f0f17); 
-        }
-        
-        .page.flipped { 
-            transform: rotateY(-180deg); 
-        }
+        .page-back { transform: rotateY(180deg); background: linear-gradient(135deg, #140a10, #1f0f17); }
+        .page.flipped { transform: rotateY(-180deg); }
 
-        .page-front h3 { 
-            color: #d4a574; 
-            font-size: clamp(1.4rem, 4vw, 2rem); 
-            margin-bottom: 1.5rem; 
-            text-align: center; 
-            font-weight: 400; 
-        }
-        
-        .page-front p, .page-back p { 
-            font-size: clamp(0.95rem, 3vw, 1.2rem); 
-            line-height: 1.8; 
-            margin-bottom: 1rem; 
-            text-align: justify; 
-        }
+        .page-front h3 { color: #d4a574; font-size: clamp(1.5rem, 4vw, 2rem); margin-bottom: 1.5rem; text-align: center; font-weight: 400; }
+        .page-front p, .page-back p { font-size: clamp(1rem, 3vw, 1.2rem); line-height: 1.8; margin-bottom: 1rem; text-align: justify; }
 
         .cover { z-index: 100; }
-        .cover .page-front { 
-            display: flex; 
-            flex-direction: column; 
-            justify-content: center; 
-            align-items: center; 
-            cursor: pointer; 
-            transition: 0.3s;
-            overflow: hidden;
-        }
-        .cover .page-front:hover { 
-            background: linear-gradient(135deg, #22141a, #2a1820); 
-        }
-        .cover h2 { 
-            font-size: clamp(1.6rem, 5vw, 2.8rem); 
-            color: #d4a574; 
-            font-weight: 300; 
-            text-align: center; 
-        }
+        .cover .page-front { display: flex; flex-direction: column; justify-content: center; align-items: center; cursor: pointer; transition: 0.3s; }
+        .cover .page-front:hover { background: linear-gradient(135deg, #22141a, #2a1820); }
+        .cover h2 { font-size: clamp(1.8rem, 5vw, 2.8rem); color: #d4a574; font-weight: 300; text-align: center; }
 
-        .nav-controls { 
-            margin-top: 2rem; 
-            display: flex; 
-            gap: 0.5rem; 
-            align-items: center; 
-            min-height: 50px; 
-            flex-wrap: wrap; 
-            justify-content: center;
-            padding: 0 1rem;
-        }
-        
-        .nav-btn { 
-            padding: 12px 20px; 
-            background: rgba(139,44,61,.3); 
-            border: 1px solid rgba(212,165,116,.5); 
-            color: #d4a574; 
-            cursor: pointer; 
-            border-radius: 5px; 
-            transition: all 0.3s ease; 
-            font-family: 'Montserrat', sans-serif; 
-            font-size: 0.85rem;
-            user-select: none;
-            -webkit-tap-highlight-color: transparent;
-            touch-action: manipulation;
-        }
-        
-        .nav-btn:active:not(:disabled) { 
-            background: rgba(139,44,61,.6); 
-            transform: scale(0.98);
-        }
-        
-        .nav-btn:disabled { 
-            opacity: 0.3; 
-            cursor: not-allowed; 
-            pointer-events: none; 
-        }
-        
-        .page-indicator { 
-            color: #d4a574; 
-            font-family: 'Cormorant Garamond', serif; 
-            min-width: 100px; 
-            text-align: center; 
-            font-size: 0.9rem; 
-        }
+        .nav-controls { margin-top: 2rem; display: flex; gap: 0.5rem; align-items: center; min-height: 50px; flex-wrap: wrap; justify-content: center; }
+        .nav-btn { padding: 10px 20px; background: rgba(139,44,61,.3); border: 1px solid rgba(212,165,116,.5); color: #d4a574; cursor: pointer; border-radius: 5px; transition: all 0.3s ease; font-family: 'Montserrat', sans-serif; font-size: 0.8rem; }
+        .nav-btn:disabled { opacity: 0.1; cursor: not-allowed; }
+        .page-indicator { color: #d4a574; font-family: 'Cormorant Garamond', serif; min-width: 80px; text-align: center; font-size: 0.9rem; }
 
-        .music-player { 
-            position: fixed; 
-            bottom: 20px; 
-            right: 20px; 
-            z-index: 100; 
-            background: rgba(20,10,15,.95); 
-            border: 1px solid rgba(212,165,116,.4); 
-            padding: 10px 15px; 
-            border-radius: 50px; 
-            display: flex; 
-            gap: 10px; 
-            align-items: center;
-            -webkit-tap-highlight-color: transparent;
-        }
-        
-        .play { 
-            width: 32px; 
-            height: 32px; 
-            border-radius: 50%; 
-            background: #8b2c3d; 
-            border: none; 
-            cursor: pointer; 
-            position: relative;
-            flex-shrink: 0;
-            -webkit-tap-highlight-color: transparent;
-        }
-        
-        .play::before { 
-            content:''; 
-            position: absolute; 
-            left: 12px; 
-            top: 9px; 
-            border-style: solid; 
-            border-width: 7px 0 7px 12px; 
-            border-color: transparent transparent transparent #d4a574; 
-        }
-        
-        .play.playing::before { 
-            border: none; 
-            width: 10px; 
-            height: 12px; 
-            left: 11px; 
-            top: 10px; 
-            border-left: 3px solid #d4a574; 
-            border-right: 3px solid #d4a574; 
-        }
-        
-        .music-info { 
-            font-size: 0.7rem; 
-            white-space: nowrap; 
-        }
+        .music-player { position: fixed; bottom: 20px; right: 20px; z-index: 100; background: rgba(20,10,15,.95); border: 1px solid rgba(212,165,116,.4); padding: 10px 15px; border-radius: 50px; display: flex; gap: 10px; align-items: center; }
+        .play { width: 32px; height: 32px; border-radius: 50%; background: #8b2c3d; border: none; cursor: pointer; position: relative; }
+        .play::before { content:''; position: absolute; left: 12px; top: 9px; border-style: solid; border-width: 7px 0 7px 12px; border-color: transparent transparent transparent #d4a574; }
+        .play.playing::before { border: none; width: 10px; height: 12px; left: 11px; top: 10px; border-left: 3px solid #d4a574; border-right: 3px solid #d4a574; }
+        .music-info { font-size: 0.7rem; white-space: nowrap; }
 
-        /* Dark Room Vignette Effect */
-        body::after {
-            content: "";
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: radial-gradient(circle, transparent 40%, rgba(0, 0, 0, 0.8) 100%);
-            pointer-events: none;
-            z-index: 5;
-        }
-
-        /* Subtle Pulsing Light for the Book */
-        .book-section::before {
-            content: "";
-            position: absolute;
-            width: 600px;
-            height: 600px;
-            background: radial-gradient(circle, rgba(212, 165, 116, 0.1) 0%, transparent 70%);
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            z-index: 1;
-            pointer-events: none;
-            animation: candleFlicker 4s infinite alternate;
-        }
-
-        @keyframes candleFlicker {
-            0% { opacity: 0.5; transform: translate(-50%, -50%) scale(1); }
-            100% { opacity: 0.8; transform: translate(-50%, -50%) scale(1.05); }
-        }
-        
-        .voice-page {
-            margin-top: 3rem;
-            text-align: center;
-        }
-
-        .voice-text {
-            font-family: 'Cormorant Garamond', serif;
-            font-size: 1.1rem;
-            font-style: italic;
-            color: rgba(212,165,116,.85);
-            cursor: pointer;
-            transition: opacity .3s ease, letter-spacing .3s ease;
-            -webkit-tap-highlight-color: transparent;
-            padding: 10px;
-            display: inline-block;
-        }
-
-        .voice-text:active {
-            opacity: .6;
-        }
-
-        .dim-overlay {
-            position: fixed;
-            inset: 0;
-            background: radial-gradient(
-                circle,
-                rgba(0, 0, 0, 0.2) 20%,
-                rgba(0, 0, 0, 0.85) 100%
-            );
-            opacity: 0;
-            pointer-events: none;
-            z-index: 50;
-            transition: opacity 1.2s ease;
-        }
-
-        .dim-overlay.active {
-            opacity: 1;
-        }
-
-        /* Mobile optimizations */
         @media(max-width: 900px) { 
-            .hero h1 {
-                font-size: clamp(2rem, 12vw, 5rem);
-            }
-            
-            .book { 
-                height: clamp(400px, 60vh, 550px);
-                width: calc(100% - 1rem);
-            }
-            
-            .page-front, .page-back {
-                padding: 1.5rem 1.25rem;
-            }
-            
-            .music-player { 
-                bottom: 15px; 
-                right: 15px; 
-                padding: 8px 12px; 
-            }
-            
-            .music-info {
-                display: none;
-            }
-            
-            .nav-btn {
-                font-size: 0.8rem;
-                padding: 10px 16px;
-            }
+            .book { height: 500px; width: 85vw; } 
+            .page { width: 100%; left: 0; } 
+            .page-back { left: 0; }
+            .music-player { bottom: 15px; right: 15px; padding: 8px 12px; }
         }
-        
-        @media(max-width: 480px) {
-            .hero {
-                padding: 1.5rem 1rem;
-            }
-            
-            .book {
-                width: calc(100% - 0.5rem);
-            }
-            
-            .page-front h3 {
-                font-size: clamp(1.2rem, 5vw, 1.6rem);
-            }
-            
-            .page-front p, .page-back p {
-                font-size: clamp(0.9rem, 3.5vw, 1.1rem);
-            }
-        }
+        /* Dark Room Vignette Effect */
+body::after {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    /* Creates a radial gradient that is transparent in the center and dark at the edges */
+    background: radial-gradient(circle, transparent 40%, rgba(0, 0, 0, 0.8) 100%);
+    pointer-events: none; /* Allows clicks to pass through to the book */
+    z-index: 5; /* Sits above particles but below the book navigation if needed */
+}
+
+/* Subtle Pulsing Light for the Book */
+.book-section::before {
+    content: "";
+    position: absolute;
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(circle, rgba(212, 165, 116, 0.1) 0%, transparent 70%);
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1;
+    pointer-events: none;
+    animation: candleFlicker 4s infinite alternate;
+}
+
+@keyframes candleFlicker {
+    0% { opacity: 0.5; transform: translate(-50%, -50%) scale(1); }
+    100% { opacity: 0.8; transform: translate(-50%, -50%) scale(1.05); }
+}
+page-front, .page-back {
+    background-image: url("https://www.transparenttextures.com/patterns/dark-matter.png"); /* Subtle grain */
+    background-color: #1a0f14; /* Your base color */}
+    
+@keyframes pulseGlow {
+    0% { text-shadow: 0 0 5px #d4a574; }
+    50% { text-shadow: 0 0 20px #d4a574; }
+    100% { text-shadow: 0 0 5px #d4a574; }
+}
+.voice-page {
+    margin-top: 4rem;
+    text-align: center;
+}
+
+.voice-text {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.1rem;
+    font-style: italic;
+    color: rgba(212,165,116,.85);
+    cursor: pointer;
+    transition: opacity .3s ease, letter-spacing .3s ease;
+}
+
+.voice-text:hover {
+    opacity: .8;
+    letter-spacing: .1em;
+}
+.dim-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.45);
+    opacity: 0;
+    pointer-events: none;
+    z-index: 4;
+    transition: opacity 0.8s ease;
+}
+
+.dim-overlay.active {
+    opacity: 1;
+}
+.dim-overlay {
+    position: fixed;
+    inset: 0;
+    background: radial-gradient(
+        circle,
+        rgba(0, 0, 0, 0.2) 20%,
+        rgba(0, 0, 0, 0.85) 100%
+    );
+    opacity: 0;
+    pointer-events: none;
+    z-index: 50;
+    transition: opacity 1.2s ease;
+}
+
+.dim-overlay.active {
+    opacity: 1;
+}
+
     </style>
 </head>
 <body>
 
-<div class="scroll-container">
-    <div class="particles" id="particles"></div>
+<div class="particles" id="particles"></div>
+<div class="glow one"></div>
+<div class="glow two"></div>
 
-    <section class="hero">
-        <h1>Happy Birthday</h1>
-        <p class="hero-message">In the quiet moments between heartbeats, where light meets shadow,
-            today exists only for you. May this year unfold like a story worth telling,
-            filled with magic, mystery, and moments that take your breath away.</p>
-        <div class="scroll">↓ Scroll to open your letter ↓</div>
-    </section>
+<section class="hero">
+    <h1>Happy Birthday</h1>
+    <p class="hero-message">In the quiet moments between heartbeats, where light meets shadow,
+        today exists only for you. May this year unfold like a story worth telling,
+        filled with magic, mystery, and moments that take your breath away.</p>
+    <div class="scroll">↓ Scroll to open your letter ↓</div>
+</section>
 
-    <section class="book-section">
-        <div class="book" id="book">
-            <div class="page cover" id="cover">
-                <div class="page-front">
-                    <h2>From Me To You</h2>
-                    <p>Click to open</p>
-                </div>
-                <div class="page-back"></div>
+<section class="book-section">
+    <div class="book" id="book">
+        <div class="page cover" id="cover">
+            <div class="page-front">
+                <h2>From Me To You</h2>
+                <p>Click to open</p>
             </div>
+            <div class="page-back"></div>
         </div>
-        
-        <div class="nav-controls">
-            <button class="nav-btn" id="prevBtn">← Previous</button>
-            <span class="page-indicator" id="pageIndicator">Cover</span>
-            <button class="nav-btn" id="nextBtn">Next →</button>
-            <button class="nav-btn" id="closeBtn" style="display:none;">Seal🕯️</button>
-        </div>
-    </section>
-</div>
+    </div>
+    
+    <div class="nav-controls">
+        <button class="nav-btn" id="prevBtn">← Previous</button>
+        <span class="page-indicator" id="pageIndicator">Cover</span>
+        <button class="nav-btn" id="nextBtn">Next →</button>
+        <button class="nav-btn" id="closeBtn" style="display:none;">Seal🕯️</button>
+    </div>
+</section>
 
 <div class="music-player">
     <button class="play" id="playBtn"></button>
@@ -480,6 +293,7 @@
 <div class="dim-overlay" id="dimOverlay"></div>
 
 <script>
+    
 const pagesData = [
     {
         front: `<h3>Author's Note</h3><p>This is not a story meant to be understood all at once.
@@ -492,11 +306,11 @@ Some things are meant to be noticed, not explained.<p></p>`,
     {
         front: `<h3>The Gravity</h3><p>They told me to follow the light, 
             so I followed you into the dark. Your existence isn't just a life to be celebrated;
-             it is a gravity I never want to escape. If loving you is a fall, I've been plummeting since the moment we met.</p>`,
+             it is a gravity I never want to escape. If loving you is a fall, I’ve been plummeting since the moment we met.</p>`,
         back:  `<p></p>`
     },
     {
-        front: `<h3>The Obsession</h3><p>I would burn every other story I've ever read just to keep yours from ending.
+        front: `<h3>The Obsession</h3><p>I would burn every other story I’ve ever read just to keep yours from ending.
              You are the mystery I don't want solved and the secret I never want to tell.
               Every year, you don't just grow older—you grow deeper into my soul.
               And I would read you endlessly, through every plot twist and character development.
@@ -510,13 +324,14 @@ Some things are meant to be noticed, not explained.<p></p>`,
     },
     {
         front: `<h3></h3>
-        <p style="text-align:center; font-style:italic; font-size:1.5rem; line-height:10;">
-                A story never spoken, only felt</p><p style="text-align:center; font-style:italic; font-size:1.5rem;">
+        <p style="text-align:center; font-style:italic; font-size:1.2rem; line-height:10;">
+                A story never spoken, only felt</p><p style="text-align:center; font-style:italic; font-size:1.2rem;">
                     — Prince</p>`,
         back: `<p></p>`
+
     },
     {
-        front: `<h3>Chapter One: The First Thought</h3><p>I don't remember deciding to notice you.
+        front: `<h3>Chapter One: The First Thought</h3><p>I don’t remember deciding to notice you.
 You appeared in my thoughts the way certain songs do—uninvited, repeatable, impossible to skip.
 Even now, when I try not to think of you, my mind betrays me gently.
 It fills in your absence with imagined details, like it knows you better than I allow myself to.</p>`,
@@ -526,13 +341,13 @@ It fills in your absence with imagined details, like it knows you better than I 
         front: `<h3>Chapter Two: The Habit</h3><p>You became routine without ever becoming ordinary.
 I started seeing you in unrelated places—in late nights, in half-finished thoughts, in moments that should have belonged to someone else.
 Nothing dramatic happened.
-That's the most unsettling part.
+That’s the most unsettling part.
 You stayed without ever asking permission.</p>`,
         back: `<p></p>`
     },
     {
         front: `<h3>Chapter Three: The Control</h3><p>There are things I could say that would change the shape of everything.
-So I don't say them.
+So I don’t say them.
 Instead, I let the thoughts exist where only I can hear them.
 I carry you carefully, like something fragile I am trusted not to break. So I watch you from a distance keeping my thoughts to myself.</p>`,
         back: `<p></p>`
@@ -542,7 +357,7 @@ I carry you carefully, like something fragile I am trusted not to break. So I wa
 The way you might look when no one is watching.
 The version of you that exists when the world is quiet and honest.
 When your expression settles into something unedited.
-That version feels more real than the one I'm allowed to know.
+That version feels more real than the one I’m allowed to know.
 These thoughts are not fantasies.
 They are simply continuations of you, created because my mind refuses to stop.</p>`,
         back: `<p></p>`
@@ -550,8 +365,8 @@ They are simply continuations of you, created because my mind refuses to stop.</
     {
         front: `<h3>Chapter Five: The Day</h3><p>Today, the world pauses long enough to acknowledge that you exist.
 I do too—in my own quiet way.
-This isn't a confession.
-It's something quieter, heavier, harder to forget.
+This isn’t a confession.
+It’s something quieter, heavier, harder to forget.
 <p>
 This day exist because of you, Happy Birthday.<p>
 If you ever wondered whether someone thinks of you more than they admit—this is that thought.</p>
@@ -559,10 +374,10 @@ If you ever wondered whether someone thinks of you more than they admit—this i
         back: `<p></p>`
     },
     {
-        front: `
+    front: `
         <h3>Afterword</h3>
         <p style="text-align:center; font-style:italic; margin-top:3rem;">
-            "I won't say what this means. If you felt it, you already know."
+            “I won’t say what this means. If you felt it, you already know.”
         </p>
 
         <div class="voice-page">
@@ -570,11 +385,13 @@ If you ever wondered whether someone thinks of you more than they admit—this i
         </div>
 
 <p style="text-align:center; font-style:italic; margin-top:3rem; font-weight:600;">
-    "My Vespera"
+    “My Vespera”
 </p>
+
+
     `,
-        back: `<p></p>`
-    }   
+    back: `<p></p>`
+}   
 ];
 
 const book = document.getElementById("book");
@@ -586,20 +403,20 @@ const pageIndicator = document.getElementById("pageIndicator");
 const flipSound = document.getElementById("pageFlipSound");
 const audio = document.getElementById("mainAudio");
 const playBtn = document.getElementById("playBtn");
-const voiceNote = document.getElementById("voiceNote");
+audio.volume = 0.6;      // background music default
+voiceNote.volume = 1.0; // voice stays clear
 const dimOverlay = document.getElementById("dimOverlay");
 
-audio.volume = 0.6;
-voiceNote.volume = 1.0;
+
 
 let currentState = 0; 
-let isFlipping = false;
 const pageElements = [cover];
 
 // Setup Pages
 pagesData.forEach((data, index) => {
     const page = document.createElement("div");
     page.className = "page";
+    // Fix: Initial layering so pages are hidden behind cover
     page.style.zIndex = pagesData.length - index; 
     page.innerHTML = `<div class="page-front">${data.front}</div><div class="page-back">${data.back}</div>`;
     book.appendChild(page);
@@ -608,8 +425,8 @@ pagesData.forEach((data, index) => {
 
 function updateUI() {
     prevBtn.disabled = (currentState === 0);
-    nextBtn.disabled = (currentState >= pageElements.length - 1);
     
+    // Fix: Refresh Z-Index for all elements based on current flip state
     pageElements.forEach((el, i) => {
         if (i < currentState) {
             el.classList.add("flipped");
@@ -631,8 +448,7 @@ function updateUI() {
 }
 
 function flipNext() {
-    if (currentState < pageElements.length - 1 && !isFlipping) {
-        isFlipping = true;
+    if (currentState < pageElements.length - 1) {
         if (currentState === 0 && audio.paused) {
             audio.play().catch(() => {});
             playBtn.classList.add("playing");
@@ -640,39 +456,28 @@ function flipNext() {
         currentState++;
         playFlip();
         updateUI();
-        setTimeout(() => { isFlipping = false; }, 1200);
     }
 }
 
 function flipPrev() {
-    if (currentState > 0 && !isFlipping) {
-        isFlipping = true;
+    if (currentState > 0) {
         currentState--;
         playFlip();
         updateUI();
-        setTimeout(() => { isFlipping = false; }, 1200);
     }
 }
 
 function closeBook() {
-    if (currentState === 0 || isFlipping) return;
-    
-    isFlipping = true;
     let delay = 0;
-    const stepsNeeded = currentState;
-    
-    for (let i = 0; i < stepsNeeded; i++) {
+    // Iterate backwards to close smoothly
+    for (let i = currentState; i > 0; i--) {
         setTimeout(() => {
-            if (currentState > 0) {
-                currentState--;
-                playFlip();
-                updateUI();
-            }
-            if (i === stepsNeeded - 1) {
-                setTimeout(() => { isFlipping = false; }, 1200);
-            }
+            currentState--;
+            playFlip();
+            updateUI();
         }, delay);
-        delay += 150;
+        delay += 150; 
+        flipSound.volume = 0.2;
     }
 }
 
@@ -682,28 +487,16 @@ function playFlip() {
     flipSound.play().catch(() => {});
 }
 
-// Event handlers
-cover.onclick = (e) => {
-    if (!e.target.closest(".voice-text") && !e.target.id === "voiceBtn") {
-        flipNext();
-    }
-};
-
+cover.onclick = flipNext;
 nextBtn.onclick = flipNext;
 prevBtn.onclick = flipPrev;
 closeBtn.onclick = closeBook;
 
 playBtn.onclick = () => {
-    if (audio.paused) { 
-        audio.play().catch(() => {}); 
-        playBtn.classList.add("playing"); 
-    } else { 
-        audio.pause(); 
-        playBtn.classList.remove("playing"); 
-    }
+    if (audio.paused) { audio.play(); playBtn.classList.add("playing"); } 
+    else { audio.pause(); playBtn.classList.remove("playing"); }
 };
 
-// Particles
 const pContainer = document.getElementById("particles");
 for(let i = 0; i < 50; i++) {
     let d = document.createElement("div");
@@ -713,45 +506,39 @@ for(let i = 0; i < 50; i++) {
     d.style.animationDelay = Math.random() * 5 + "s";
     pContainer.appendChild(d);
 }
-
 function fadeAudio(audioEl, targetVolume, duration = 600) {
     const step = 50;
-    const startVolume = audioEl.volume;
-    const volumeChange = targetVolume - startVolume;
-    const steps = duration / step;
-    const volumeStep = volumeChange / steps;
+    const volumeStep = (targetVolume - audioEl.volume) / (duration / step);
 
     const fade = setInterval(() => {
-        const newVolume = audioEl.volume + volumeStep;
-        
+        audioEl.volume += volumeStep;
         if (
-            (volumeStep > 0 && newVolume >= targetVolume) ||
-            (volumeStep < 0 && newVolume <= targetVolume)
+            (volumeStep > 0 && audioEl.volume >= targetVolume) ||
+            (volumeStep < 0 && audioEl.volume <= targetVolume)
         ) {
-            audioEl.volume = Math.max(0, Math.min(1, targetVolume));
+            audioEl.volume = targetVolume;
             clearInterval(fade);
-        } else {
-            audioEl.volume = Math.max(0, Math.min(1, newVolume));
         }
     }, step);
 }
-
 function enablePageClick() {
     pageElements.forEach((page, index) => {
         page.addEventListener("click", (e) => {
+            // Prevent clicking buttons from flipping pages
             if (
                 e.target.closest(".nav-btn") ||
                 e.target.closest(".play") ||
-                e.target.closest(".voice-text") ||
-                e.target.id === "voiceBtn"
+                e.target.closest(".voice-btn")
             ) return;
 
-            if (index === currentState && currentState < pageElements.length - 1 && !isFlipping) {
+            // Only flip if this page is the current one
+            if (index === currentState) {
                 flipNext();
             }
         });
     });
 }
+
 
 document.addEventListener("click", (e) => {
     if (e.target && e.target.id === "voiceBtn") {
@@ -759,12 +546,12 @@ document.addEventListener("click", (e) => {
         const voice = document.getElementById("voiceNote");
 
         if (voice.paused) {
-            fadeAudio(bgMusic, 0.15, 800);
+            fadeAudio(bgMusic, 0.15, 800); // lower background
             voice.play().catch(() => {});
             e.target.textContent = "listening…";
         } else {
             voice.pause();
-            fadeAudio(bgMusic, 0.6, 800);
+            fadeAudio(bgMusic, 0.6, 800); // restore background
             e.target.textContent = "a voice note for you";
         }
 
@@ -774,24 +561,29 @@ document.addEventListener("click", (e) => {
         };
     }
 });
-
 voiceNote.addEventListener("play", () => {
-    fadeAudio(audio, 0.25, 800);
-    dimOverlay.classList.add("active");
+    audio.volume = 0.25;               // lower background music
+    dimOverlay.classList.add("active"); // dim room
 });
 
 voiceNote.addEventListener("pause", () => {
-    fadeAudio(audio, 0.6, 800);
+    audio.volume = 0.6;
     dimOverlay.classList.remove("active");
 });
 
 voiceNote.addEventListener("ended", () => {
-    fadeAudio(audio, 0.6, 800);
+    audio.volume = 0.6;
     dimOverlay.classList.remove("active");
 });
 
+
+
+
+
+// Ensure proper start state
 updateUI();
 enablePageClick();
+
 </script>
 </body>
 </html>
