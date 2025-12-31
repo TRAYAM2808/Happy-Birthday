@@ -304,7 +304,7 @@ page-front, .page-back {
 <audio id="pageFlipSound">
     <source src="https://assets.mixkit.co/active_storage/sfx/1101/1101-preview.mp3" type="audio/mpeg">
 </audio>
-<audio id="voiceNote" preload="auto" playsinline>
+<audio id="voiceNote">
     <source src="https://res.cloudinary.com/ddllaiv3s/video/upload/v1767190228/Jaane_Na_Tu-320kbps_ejmzho.mp3" type="audio/mpeg">
 </audio>
 <div class="dim-overlay" id="dimOverlay"></div>
@@ -612,16 +612,10 @@ document.addEventListener("click", (e) => {
         const bgMusic = document.getElementById("mainAudio");
         const voice = document.getElementById("voiceNote");
 
-       if (voice.paused) {
-    // MUST play immediately on mobile
-    voice.play().catch(() => {});
-
-    // THEN fade background (allowed after play)
-    fadeAudio(bgMusic, 0.15, 800);
-
-    e.target.textContent = "listening…";
-
-
+        if (voice.paused) {
+            fadeAudio(bgMusic, 0.15, 800); // lower background
+            voice.play().catch(() => {});
+            e.target.textContent = "listening…";
         } else {
             voice.pause();
             fadeAudio(bgMusic, 0.6, 800); // restore background
@@ -660,3 +654,4 @@ enablePageClick();
 </script>
 </body>
 </html>
+
