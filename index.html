@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -131,7 +130,11 @@ body::after {
         }
 
         .page { position: absolute; width: 50%; height: 100%; right: 0; transform-origin: left; transform-style: preserve-3d; transition: transform 1.2s cubic-bezier(.6,.1,.25,1); box-shadow: 0 20px 60px rgba(0,0,0,.7); cursor: default; }
-        
+        .page {
+  will-change: transform;
+  transform: translateZ(0);
+}
+
         .page-front, .page-back { 
             position: absolute; 
             inset: 0; 
@@ -463,7 +466,7 @@ function updateUI() {
     pageElements.forEach((el, i) => {
         if (i < currentState) {
             el.classList.add("flipped");
-            el.style.zIndex = 100 + i;
+            el.style.zIndex = pageElements.length + i;
         } else {
             el.classList.remove("flipped");
             el.style.zIndex = pageElements.length - i;
@@ -478,7 +481,7 @@ function updateUI() {
         closeBtn.style.display = "none";
     }
     pageIndicator.textContent = currentState === 0 ? "Cover" : `Page ${currentState} of ${pagesData.length}`;
-}
+}   
 
 function flipNext() {
     if (currentState < pageElements.length - 1) {
