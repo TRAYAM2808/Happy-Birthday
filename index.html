@@ -305,8 +305,7 @@ filled with magic, mystery, and moments that take your breath away.</p>
 <source src="https://assets.mixkit.co/active_storage/sfx/1101/1101-preview.mp3" type="audio/mpeg">
 </audio>
 <audio id="voiceNote">
-    <source src="https://res.cloudinary.com/ddllaiv3s/video/upload/v1766933357/Jaane_Na_Tu-320kbps_dfkptv.mp3" type="audio/mpeg">
-    <source src="https://res.cloudinary.com/ddllaiv3s/video/upload/v1767190228/Jaane_Na_Tu-320kbps_ejmzho.mp3" type="audio/mpeg">
+<source src="https://res.cloudinary.com/ddllaiv3s/video/upload/v1766933357/Jaane_Na_Tu-320kbps_dfkptv.mp3" type="audio/mpeg">
 </audio>
 <div class="dim-overlay" id="dimOverlay"></div>
 
@@ -422,6 +421,7 @@ const flipSound = document.getElementById("pageFlipSound");
 const audio = document.getElementById("mainAudio");
 const playBtn = document.getElementById("playBtn");
 audio.volume = 0.6;      // background music default
+audio.volume = 0.8;      // background music default
 voiceNote.volume = 1.0; // voice stays clear
 const dimOverlay = document.getElementById("dimOverlay");
 
@@ -481,18 +481,23 @@ updateUI();
 
 
 function flipPrev() {
-if (isFlipping) return;
-if (currentState <= 0) return;
+    if (isFlipping) return;
+    if (currentState <= 0) return;
 
-isFlipping = true;
+    isFlipping = true;
 
-currentState--;
-playFlip();
-updateUI();
+    currentState--;
+    playFlip();
+    updateUI();
 
-setTimeout(() => {
-isFlipping = false;
-}, 1200);
+    setTimeout(() => {
+        isFlipping = false;
+    }, 1200);
+    if (currentState > 0) {
+        currentState--;
+        playFlip();
+        updateUI();
+    }
 }
 
 
