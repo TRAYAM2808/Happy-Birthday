@@ -304,7 +304,6 @@ page-front, .page-back {
 <audio id="pageFlipSound">
     <source src="https://assets.mixkit.co/active_storage/sfx/1101/1101-preview.mp3" type="audio/mpeg">
 </audio>
-
 <audio id="voiceNote" preload="auto" playsinline>
     <source src="https://res.cloudinary.com/ddllaiv3s/video/upload/v1767190228/Jaane_Na_Tu-320kbps_ejmzho.mp3" type="audio/mpeg">
 </audio>
@@ -515,15 +514,6 @@ function flipPrev() {
 
 
 function closeBook() {
-    voiceNote.pause();
-voiceNote.currentTime = 0;
-
-const voiceBtn = document.getElementById("voiceBtn");
-if (voiceBtn) voiceBtn.textContent = "a voice note for you";
-
-dimOverlay.classList.remove("active");
-audio.volume = 0.6;
-
     if (isFlipping || currentState === 0) return;
 
     isFlipping = true;
@@ -622,7 +612,7 @@ document.addEventListener("click", (e) => {
         const bgMusic = document.getElementById("mainAudio");
         const voice = document.getElementById("voiceNote");
 
-        if (voice.paused) {
+       if (voice.paused) {
     // MUST play immediately on mobile
     voice.play().catch(() => {});
 
@@ -630,7 +620,7 @@ document.addEventListener("click", (e) => {
     fadeAudio(bgMusic, 0.15, 800);
 
     e.target.textContent = "listening…";
-}
+
 
         } else {
             voice.pause();
@@ -643,7 +633,7 @@ document.addEventListener("click", (e) => {
             e.target.textContent = "a voice note for you";
         };
     }
-);
+});
 voiceNote.addEventListener("play", () => {
     audio.volume = 0.25;               // lower background music
     dimOverlay.classList.add("active"); // dim room
@@ -670,4 +660,3 @@ enablePageClick();
 </script>
 </body>
 </html>
-
