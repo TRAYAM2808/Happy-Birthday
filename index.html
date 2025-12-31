@@ -420,7 +420,7 @@ const pageIndicator = document.getElementById("pageIndicator");
 const flipSound = document.getElementById("pageFlipSound");
 const audio = document.getElementById("mainAudio");
 const playBtn = document.getElementById("playBtn");
-audio.volume = 0.8;      // background music default
+audio.volume = 0.6;      // background music default
 voiceNote.volume = 1.0; // voice stays clear
 const dimOverlay = document.getElementById("dimOverlay");
 
@@ -480,11 +480,18 @@ function flipNext() {
     
 
 function flipPrev() {
-    if (currentState > 0) {
-        currentState--;
-        playFlip();
-        updateUI();
-    }
+    if (isFlipping) return;
+    if (currentState <= 0) return;
+
+    isFlipping = true;
+
+    currentState--;
+    playFlip();
+    updateUI();
+
+    setTimeout(() => {
+        isFlipping = false;
+    }, 1200);
 }
 
 
