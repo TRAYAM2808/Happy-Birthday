@@ -305,7 +305,7 @@ page-front, .page-back {
     <source src="https://assets.mixkit.co/active_storage/sfx/1101/1101-preview.mp3" type="audio/mpeg">
 </audio>
 <audio id="voiceNote">
-    <source src="https://res.cloudinary.com/ddllaiv3s/video/upload/v1767190228/Jaane_Na_Tu-320kbps_ejmzho.mp3" type="audio/mpeg">
+    <source src="https://res.cloudinary.com/ddllaiv3s/video/upload/v1767881077/Standard_recording_8_1_jivfl5.aac" type="audio/mpeg">
 </audio>
 <div class="dim-overlay" id="dimOverlay"></div>
 
@@ -613,7 +613,7 @@ document.addEventListener("click", (e) => {
         const voice = document.getElementById("voiceNote");
 
         if (voice.paused) {
-            fadeAudio(bgMusic, 0.15, 800); // lower background
+            fadeAudio(bgMusic, 0.09, 800); // lower background
             voice.play().catch(() => {});
             e.target.textContent = "listening…";
         } else {
