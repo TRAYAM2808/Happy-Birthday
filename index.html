@@ -613,7 +613,7 @@ document.addEventListener("click", (e) => {
         const voice = document.getElementById("voiceNote");
 
         if (voice.paused) {
-            fadeAudio(bgMusic, 0.09, 800); // lower background
+            fadeAudio(bgMusic, 0.05, 800); // lower background
             voice.play().catch(() => {});
             e.target.textContent = "listening…";
         } else {
@@ -654,4 +654,5 @@ enablePageClick();
 </script>
 </body>
 </html>
+
 
